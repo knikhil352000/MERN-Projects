@@ -1,13 +1,12 @@
 
 const reducer = (posts = [], action) => {
-    switch(acton.type) {
+    switch(action.type) {
         case 'FETCH_ALL':
-            ...posts,
-            return posts;
+            return action.payload;
         case 'CREATE' :
             return posts;
         default:
-            return posts
+            return posts;
     }
 }
 
