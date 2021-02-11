@@ -7,6 +7,14 @@ import { GoogleLogin } from 'react-google-login'
 import Icon from './Icon';
 import {useDispatch} from 'react-redux'
 import { useHistory } from 'react-router-dom';
+import { clientID } from '../../env';
+
+const initialState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    
+}
 
 const Auth = () => {
     const dispatch = useDispatch();
@@ -14,6 +22,7 @@ const Auth = () => {
     const classes = useStyles();
     const history = useHistory();
     const [showPassword, setShowPassword] = useState(false);
+    const [formData, setFormData] = useState()
     const handleShowPassword = () => setShowPassword((prevState) => !prevState)
     const handleSubmit = () => {
          
@@ -31,7 +40,7 @@ const Auth = () => {
         
         try {
             dispatch({type: 'AUTH', data: {result, token}});
-            history.pushState('/');
+            history.push('/');
         } catch(error) {
             console.log(error);
         }
@@ -69,7 +78,7 @@ const Auth = () => {
                         {isSignUp ? 'Sign Up' : 'Sign In'}
                     </Button>
                     <GoogleLogin 
-                        clientId='700183486147-vfd1rp1vopndu0fees0pu4g1dnl7b4ij.apps.googleusercontent.com'
+                        clientId={clientID}
                         render={(renderProps) => (
                             <Button 
                                 className={classes.googleButton} 
