@@ -1,12 +1,13 @@
 import React,{useState} from 'react'
-import {Avatar, Button, Paper, Grid, Typography, Container, TextField} from '@material-ui/core'
+import {Avatar, Button, Paper, Grid, Typography, Container} from '@material-ui/core'
 import useStyles from './styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Input from './Input'
 import { GoogleLogin } from 'react-google-login'
 import Icon from './Icon';
+import {useDispatch} from 'react-redux'
 const Auth = () => {
-    const state = null;
+    const dispatch = useDispatch();
     const [isSignUp, setIsSignUp] = useState(false)
     const classes = useStyles();
     const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +23,14 @@ const Auth = () => {
         handleShowPassword(false)
     }
     const googleSuccess = async (res) => {
-        console.log(res);
+        const result = res?.profileObj;
+        const token = res?.tokenId;
+        
+        try {
+            dispatch({type: 'AUTH', data: {result, token}});
+        } catch(error) {
+            console.log(error);
+        }
     }
     const googleFailure = () => {
         console.log('Google Sign In was unsuccessful')
@@ -57,7 +65,7 @@ const Auth = () => {
                         {isSignUp ? 'Sign Up' : 'Sign In'}
                     </Button>
                     <GoogleLogin 
-                        clientId=''
+                        clientId='700183486147-vfd1rp1vopndu0fees0pu4g1dnl7b4ij.apps.googleusercontent.com'
                         render={(renderProps) => (
                             <Button 
                                 className={classes.googleButton} 
