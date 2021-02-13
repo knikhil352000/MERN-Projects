@@ -8,7 +8,7 @@ import Icon from './Icon';
 import {useDispatch} from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import { clientID } from '../env';
-
+import {signin, signup} from '../actions/auth'
 const initialState = {
     firstName: '',
     lastName: '',
@@ -38,7 +38,7 @@ const Auth = () => {
     }
     const switchMode = () => {
         setIsSignUp(prevState => !prevState)
-        handleShowPassword(false)
+        setShowPassword(false)
     }
     const googleSuccess = async (res) => {
         const result = res?.profileObj;
