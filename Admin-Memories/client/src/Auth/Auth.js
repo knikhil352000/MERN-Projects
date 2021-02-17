@@ -68,10 +68,8 @@ const Auth = () => {
                         {
                             isSignUp && (
                                 <>
-                                    {/* <Grid xs={6} md={12}> */}
-                                        <Input name='firstName' label='First Name' handleChange={handleChange} autoFocus half/>
-                                        <Input name='lastName' label='Last Name' handleChange={handleChange} half/>
-                                    {/* </Grid> */}
+                                    <Input name='firstName' label='First Name' handleChange={handleChange} autoFocus half/>
+                                    <Input name='lastName' label='Last Name' handleChange={handleChange} half/>
                                 </>
                             )
                         }

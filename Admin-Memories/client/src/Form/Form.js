@@ -8,7 +8,7 @@ const Form = ({setCurrentId, currentId}) => {
     const classes = useStyles();
     const post = useSelector(state => currentId ? state.posts.find((p) => p._id === currentId) : null)
     const [postData, setPostData] = useState({
-        creator:'', title:'', message: '', tags: '', selectedFile: '',
+        title:'', message: '', tags: '', selectedFile: '',
     })
     const dispatch = useDispatch();
     useEffect(() => {
@@ -28,7 +28,7 @@ const Form = ({setCurrentId, currentId}) => {
     const clear = () => {
         setCurrentId(null);
         setPostData({
-            creator:'', title:'', message: '', tags: '', selectedFile: '',
+            title:'', message: '', tags: '', selectedFile: '',
         })
     }
     return (
@@ -58,14 +58,6 @@ const Form = ({setCurrentId, currentId}) => {
                     fullWidth 
                     value={postData.message}
                     onChange={(e) => setPostData({...postData, message: e.target.value})}
-                />
-                <TextField 
-                    name='creator' 
-                    variant='outlined' 
-                    label='Tag' 
-                    fullWidth 
-                    value={postData.tags}
-                    onChange={(e) => setPostData({...postData, tags: e.target.value.split(',')})}
                 />
                 <div className={classes.fileInput} >
                     <FileBase 
