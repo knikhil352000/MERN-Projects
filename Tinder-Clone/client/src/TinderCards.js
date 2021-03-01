@@ -14,7 +14,7 @@ const TinderCards = () => {
         },
         {
             name: 'Sandra Bullock',
-            url: 'https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F0cd934b4c7b6065496ba00e1f5f826d4%2F0x0.jpg'
+            url: 'https://i.insider.com/5c350e4c01c0ea12db0b25f5?width=1000&format=jpeg&auto=webp'
         },
 
     ]);
