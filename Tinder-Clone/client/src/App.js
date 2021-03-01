@@ -1,14 +1,15 @@
 import React from 'react'
 import Header from './Header'
+import TinderCards from './TinderCards'
 
 const App = () => {
     return (
         <div className="app">
-            <h1>Lets build the MERN TINDER clone</h1>
 
             {/* Headers */}
             <Header /> 
             {/* TinderCards */}
+            <TinderCards />
             {/* SwipeButtons */}
         </div>
     )
