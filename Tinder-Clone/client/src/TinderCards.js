@@ -6,10 +6,12 @@ import axios from './axios'
 const TinderCards = () => {
     const [people, setPeople] = useState([]);
     useEffect(() => {
-        const fetchData = async() => {
-            const req = await axios.get('tinder/cards');
+        async function fetchData() {
+            const req = await axios.get('/tinder/cards');
+            // console.log(req.data);
             setPeople(req.data);
         }
+        fetchData();
     }, [])
     const swiped = (direction, nameToDelete) => {
         console.log('Removing' + nameToDelete);
@@ -32,7 +34,7 @@ const TinderCards = () => {
                         >
                             <div 
                                 className="card"
-                                style={{backgroundImage: `url(${person.url})`}}
+                                style={{backgroundImage: `url(${person.imgUrl})`}}
                             >
                                 <h3>{person.name}</h3>
                             </div>
