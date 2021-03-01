@@ -1,7 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
+import Header from './Header'
 
 const App = () => {
-    return <h1>Hello</h1>
+    return (
+        <div className="app">
+            <h1>Lets build the MERN TINDER clone</h1>
+
+            {/* Headers */}
+            <Header /> 
+            {/* TinderCards */}
+            {/* SwipeButtons */}
+        </div>
+    )
+    
 }
 
 
