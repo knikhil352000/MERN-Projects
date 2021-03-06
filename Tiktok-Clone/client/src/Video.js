@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react'
 import './Video.css'
 import VideoFooter from './VideoFooter';
-const Video = () => {
+import VideoSidebar from './VideoSidebar'
+const Video = ({ url }) => {
     const videoRef = useRef(null);
     const [playing, setPlaying] = useState(false)
     const handleVideoPress = () => {
@@ -24,13 +25,13 @@ const Video = () => {
                 onClick={handleVideoPress}
                 ref={videoRef}
                 className='video__player'
-                src="https://vod-progressive.akamaized.net/exp=1615076752~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F3968%2F18%2F469843671%2F2089634529.mp4~hmac=776019479c460919790511c053bed9f21899f24f5252529400694d9a2061c830/vimeo-prod-skyfire-std-us/01/3968/18/469843671/2089634529.mp4?filename=pexels-maksim-goncharenok-5642532.mp4"
+                src={url}
             >
 
             </video>
 
             <VideoFooter />
-            {/* VideoSidebar */}
+            <VideoSidebar />
         </div>
     )
 }
