@@ -1,21 +1,19 @@
 import React from 'react'
 import Video from './Video'
-
+import './App.css'
 
 const App = () => {
     return (
         <div className="app">
-            <h1>Hello World</h1>
-            <Video />
-            <Video />
-            {/* <Video />
-            <Video />
-            <Video />
-            <Video />
-            <Video /> */}
+
+            <div className="app__videos">
+                <Video />
+                <Video />
+            </div>
+
         </div>
     )
-    
+
 }
 
 
