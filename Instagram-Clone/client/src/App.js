@@ -1,9 +1,9 @@
 import React from 'react'
 import './App.css'
+import Post from './Post'
 const App = () => {
     return (
         <div className="app">
-            <h1>Hello world</h1>
             <div className="app__header">
                 <img
                     className="app__headerImage"
@@ -13,7 +13,9 @@ const App = () => {
 
             </div>
             {/* Header */}
-            {/* Posts */}
+            <Post />
+            <Post />
+            <Post />
             {/* Posts */}
         </div>
     )
