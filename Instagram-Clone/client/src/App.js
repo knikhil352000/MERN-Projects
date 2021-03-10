@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from 'react'
 import './App.css'
 import Post from './Post'
-import {db} from './firebase'
+import {db, auth} from './firebase'
 import { Button, Avatar, makeStyles, Modal, Input } from "@material-ui/core";
 function getModalStyle() {
     const top = 50;
@@ -32,10 +32,24 @@ const App = () => {
     const [open, setOpen] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
     const [modalStyles] = useState(getModalStyle);
-    const handleLogin = () => {
-        
-    }
+    const [user, setUser] = useState(null)
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if(authUser) {
+                //user has logged in
+                console.log(authUser)
+                setUser(authUser);
+            } else {
+                //user has logged out
+                setUser(null);
+            }
+        })
+        return () => {
+            unsubscribe();
+        }
+    }, [user, username])
     useEffect(() => {
         db.collection('posts').onSnapshot(snapshot => {
             setPosts(snapshot.docs.map(doc => ({
@@ -43,19 +57,41 @@ const App = () => {
                 post: doc.data(),
             })))
         });
-    }, [posts])  
+    }, [posts]);  
+    const handleLogin = () => {
+
+    }
+    const signUp = (e) => {
+        e.preventDefault();
+        auth.createUserWithEmailAndPassword(email, password)
+        .then((authUser) => {
+            return authUser.user.updateProfile({
+                displayName: username
+            })
+        })
+        .catch((error) => alert(error.message))
+    }
     return (
         <div className="app">
             <Modal
                 open={open}
                 onClose={() => setOpen(false)}
             >
+                
                 <div style={modalStyles} className={classes.paper}>
-                    <center>
-                        <img
-                            className="app__headerImage"
-                            src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                            alt=""
+                    <form className='app__signup'>
+                        <center>
+                            <img
+                                className="app__headerImage"
+                                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                                alt=""
+                            />
+                        </center>
+                        <Input 
+                            placeholder='username'
+                            type='text'
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                         <Input 
                             placeholder='email'
@@ -69,8 +105,8 @@ const App = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <Button onClick={handleLogin}>Login</Button>
-                    </center>
+                        <Button onClick={signUp}>Sign Up</Button>
+                    </form>
                 </div>
             </Modal>
             <div className="app__header">
@@ -80,13 +116,18 @@ const App = () => {
                     alt=""
                 />
             </div>
-            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+            {
+                user ? (
+                    <Button onClick={() => auth.signOut()}>Sign Out</Button>
+                    ) : (
+                    <Button onClick={() => setOpen(true)}>Sign Up</Button>
+                )
+            }
             {
                 posts.map(({id, post}) => (
                     <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
                 ))
             }
-        
         </div>
     )
 }
