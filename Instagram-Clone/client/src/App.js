@@ -32,6 +32,7 @@ const App = () => {
     const [open, setOpen] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
+    const [openSignIn, setOpenSignIn] = useState(false)
     const [username, setUsername] = useState('')
     const [modalStyles] = useState(getModalStyle);
     const [user, setUser] = useState(null)
@@ -70,6 +71,13 @@ const App = () => {
             })
         })
         .catch((error) => alert(error.message))
+        setOpen(false);
+    }
+    const signIn = (e) => {
+        e.preventDefault();
+        auth.signInWithEmailAndPassword(email, password)
+        .catch(error => alert(error.message));
+        setOpenSignIn(false);
     }
     return (
         <div className="app">
@@ -109,6 +117,36 @@ const App = () => {
                     </form>
                 </div>
             </Modal>
+            <Modal
+                open={openSignIn}
+                onClose={() => setOpenSignIn(false)}
+            >
+                
+                <div style={modalStyles} className={classes.paper}>
+                    <form className='app__signup'>
+                        <center>
+                            <img
+                                className="app__headerImage"
+                                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                                alt=""
+                            />
+                        </center>
+                        <Input 
+                            placeholder='email'
+                            type='text'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <Input 
+                            placeholder='password'
+                            type='password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <Button onClick={signIn}>Sign In</Button>
+                    </form>
+                </div>
+            </Modal>
             <div className="app__header">
                 <img
                     className="app__headerImage"
@@ -118,9 +156,12 @@ const App = () => {
             </div>
             {
                 user ? (
-                    <Button onClick={() => auth.signOut()}>Sign Out</Button>
+                    <Button onClick={() => auth.signOut()}>Logout</Button>
                     ) : (
-                    <Button onClick={() => setOpen(true)}>Sign Up</Button>
+                    <>
+                        <Button onClick={() => setOpen(true)}>Sign Up</Button>
+                        <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+                    </>
                 )
             }
             {
