@@ -3,6 +3,7 @@ import './App.css'
 import Post from './Post'
 import {db, auth} from './firebase'
 import { Button, Avatar, makeStyles, Modal, Input } from "@material-ui/core";
+import ImageUpload from './ImageUpload';
 function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -81,6 +82,7 @@ const App = () => {
     }
     return (
         <div className="app">
+            <ImageUpload />
             <Modal
                 open={open}
                 onClose={() => setOpen(false)}
