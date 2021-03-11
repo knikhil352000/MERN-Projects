@@ -1,11 +1,13 @@
 import React,{ useState} from 'react'
 import { Button, Input } from '@material-ui/core'
 import './ImageUpload.css'
+import firebase from 'firebase'
 import { db, storage } from './firebase';
-const ImageUpload = () => {
+const ImageUpload = ({username}) => {
     const [caption, setCaption] = useState('');
-    const [progress, setprogress] = useState(0);
+    const [progress, setProgress] = useState(0);
     const [image, setImage] = useState('');
+    const [url, setUrl] = useState('')
 
     const handleChange = (e) => {
         if(e.target.files[0]) {
@@ -21,15 +23,37 @@ const ImageUpload = () => {
                 const progress = Math.round(
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                 );
-                setprogress(progress);
+                setProgress(progress);
+            },
+            (error) => {
+                alert(error.message);
+            },
+            () => {
+                storage
+                .ref('images')
+                .child(image.name)
+                .getDownloadURL()
+                .then(url => {
+                    setUrl(url);
+                    db.collection('posts').add({
+                        imageUrl: url,
+                        caption: caption,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        username: username,
+                    });
+                    setProgress(0);
+                    setCaption("");
+                    setImage(null)
+                })
             }
         )
     }
-    return (
+    return ( 
         <div>
             {/* Caption Input*/}
             {/* File Picker */}
             {/* Post button */}
+            <progress value={progress} max="100"/>
             <Input onChange={(e) => setCaption(e.target.value)} type="text" placeholder='Enter a caption...' value={caption}/>
             <Input type="file" onChange={handleChange}/>
             <Button onClick={handleUpload}>Upload</Button>
