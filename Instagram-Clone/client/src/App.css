@@ -3,6 +3,8 @@
     object-fit: contain;
     padding: 20px;
     border-bottom: 1px solid lightgray;
+    display: flex;
+    justify-content: space-between;
 }
 
 .app {
@@ -12,4 +14,12 @@
 .app__signup {
     display: flex;
     flex-direction: column;
+}
+
+.app__headerImage {
+    object-fit: contain;
+}
+
+.app__posts{
+    padding: 20px;
 }
