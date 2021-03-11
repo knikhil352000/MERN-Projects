@@ -22,4 +22,10 @@
 
 .app__posts{
     padding: 20px;
+    display: flex;
 }
+
+.app__posts__single {
+    margin: 20px;
+}
+
