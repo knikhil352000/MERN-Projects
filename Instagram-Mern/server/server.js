@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
+// import bodyParser from 'body-parser'
 import dbModel from './dbModel.js'
 const app = express();
 const port = 9000;
@@ -14,12 +15,12 @@ mongoose.connection.once('open', () => {
 })
 
 app.get('/', (req, res) => {
-    res.status(200).send('Hello World');
+    res.status(200).send('Hello World'); 
 })
 
 app.post('/upload', (req, res) => {
-    const data = req.body;
-    dbModel.create(data, (err, data) => {
+    const post = req.body;
+    dbModel.create(post, (err, data) => {
         if(err) {
             res.status(500).send(err);
         } else {
